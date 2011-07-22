@@ -26,7 +26,7 @@ class TwitPhoto
       imageUrl = TwitPhoto.getPhotoUrlFromUrl url
       if !imageUrl.nil?
         results << imageUrl
-      end 
+      end
     end
 
     return results
@@ -41,13 +41,11 @@ class TwitPhoto
   # == Returns:
   # return::
   #   A media URL as a string, or nil
-  # 
+  #
   # == Example:
   #    TwitPhoto::TwitPhoto.getPhotoUrlFromUrl "http://yfrog.com/kfx6gdj"
   def self.getPhotoUrlFromUrl url
-    adaptors = [Adaptors::YFrogAdaptor, Adaptors::TwitPicAdaptor, Adaptors::LockerzAdaptor, Adaptors::InstagramAdaptor]
-
-    adaptors.each do |adaptor|
+    self.adaptors.each do |adaptor|
        imageUrl = adaptor.getImageUrl url
        if !imageUrl.nil?
          return imageUrl
@@ -60,7 +58,7 @@ class TwitPhoto
   # returns all of the photo URLs from a tweet object from the "twitter" gem (http://twitter.rubyforge.org/)
   #
   # IMPORTANT: this expects detailed entities from the twitter API, so request with :include_entities => 't'
-  # 
+  #
   # IMPORTANT: this will yield better results than the other methods, since Twitter now has native media support
   #
   # == Paramaters
@@ -78,7 +76,7 @@ class TwitPhoto
     end
 
     # ensure the user included entites
-    if !defined? tweet.entites || tweet.entities.nil? 
+    if !defined? tweet.entites || tweet.entities.nil?
       raise ArgumentError, 'not a valid tweet object, make sure you :include_entities => \'t\' in the request'
     end
 
@@ -110,6 +108,45 @@ class TwitPhoto
     return results
   end
 
+
+
+   # Expand shortened url
+   #
+   # == Parameters:
+   # url::
+   #   The URL as a string (not URI)
+   #
+   # == Returns:
+   # return::
+   #   A final URL as a string, or nil
+   #
+   # == Example:
+   #    TwitPhoto::TwitPhoto.process_redirects "http://http://bit.ly/oMoqqY"
+  def self.expand_urls(u)
+    response = Net::HTTP.get_response(URI.parse(u))
+    return u unless response.kind_of?(Net::HTTPRedirection)
+
+    limit = 3
+
+      while limit > 0 && response.kind_of?(Net::HTTPRedirection)
+
+        u = response['location']
+        response = Net::HTTP.get_response(URI.parse(u))
+
+        limit -= 1
+      end
+    u
+  end
+
+  def self.supported_domains
+    self.adaptors.map{ |a| a.domains }.flatten
+  end
+
+protected
+
+  def self.adaptors
+    [Adaptors::YFrogAdaptor, Adaptors::TwitPicAdaptor, Adaptors::LockerzAdaptor, Adaptors::InstagramAdaptor]
+  end
 
 end
 end

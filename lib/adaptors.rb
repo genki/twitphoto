@@ -3,55 +3,67 @@ require 'uri'
 module TwitPhoto
 class Adaptors
   class InstagramAdaptor
+    def self.domains
+      %w(http://instagr.am)
+    end
+
     def self.getImageUrl url
-        if url.index("http://instagr.am") != 0
-          return nil
-        end
+      domain = self.domains.select { |d| url.index(d) == 0 }
+      return nil if domain.empty?
 
-        # ensure last char is '/'
-        if url[url.length - 1] != "/"[0]
-          url = url + "/"
-        end
+      # ensure last char is '/'
+      if url[url.length - 1] != "/"[0]
+        url = url + "/"
+      end
 
-        return url + "media/?size=m"
+      return url + "media/?size=m"
     end
   end
 
   class LockerzAdaptor
-    def self.getImageUrl url
-        # TweetPhoto was a good name, why they changed twice I don't understand
-        if url.index("http://tweetphoto.com") != 0 && url.index("http://plixi.com") != 0 && url.index("http://lockerz.com") != 0
-          return nil
-        end
 
-        return "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=medium&url=" + url 
+    # TweetPhoto was a good name, why they changed twice I don't understand
+    def self.domains
+      %w(http://tweetphoto.com http://plixi.com http://lockerz.com)
+    end
+
+    def self.getImageUrl url
+      domain = self.domains.select { |d| url.index(d) == 0 }
+      return nil if domain.empty?
+
+      return "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=medium&url=" + url
     end
   end
 
   class TwitPicAdaptor
+    def self.domains
+      %w(http://twitpic.com)
+    end
+
     def self.getImageUrl url
-        # check for "http://twitpic.com" (no domain since yfrog supports many domains
-        if url.index("http://twitpic.com") != 0
-          return nil
-        end
+      domain = self.domains.select { |d| url.index(d) == 0 }
+      return nil if domain.empty?
 
-        uri = URI.parse(url)
-        id = uri.path
+      uri = URI.parse(url)
+      id = uri.path
 
-        return "http://twitpic.com/show/large" + id 
+      return "http://twitpic.com/show/large" + id
     end
   end
 
   class YFrogAdaptor
+    # check for "http://yfrog." (no domain since yfrog supports many domains)
+    def self.domains
+      %w(http://yfrog.)
+    end
+
     def self.getImageUrl url
-        # check for "http://yfrog." (no domain since yfrog supports many domains
-        if url.index("http://yfrog.") != 0
-          return nil
-        end
+        domain = self.domains.select { |d| url.index(d) == 0 }
+        return nil if domain.empty?
 
         uri = URI.parse(url)
         id = uri.path
-        
+
         return "http://yfrog.com" + id + ":medium"
     end
   end
