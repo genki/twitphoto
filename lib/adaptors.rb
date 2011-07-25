@@ -16,7 +16,7 @@ class Adaptors
         url = url + "/"
       end
 
-      return url + "media/?size=m"
+      return url + "media/?size=l"
     end
   end
 
@@ -31,7 +31,7 @@ class Adaptors
       domain = self.domains.select { |d| url.index(d) == 0 }
       return nil if domain.empty?
 
-      return "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=medium&url=" + url
+      return "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=large&url=" + url
     end
   end
 

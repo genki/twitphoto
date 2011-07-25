@@ -33,11 +33,11 @@ class TestTwitphoto < Test::Unit::TestCase
   end
 
   should "test getPhotoFromUrl" do
-    assert_equal TwitPhoto::TwitPhoto.getPhotoUrlFromUrl("http://tweetphoto.com/28103398"), "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=medium&url=http://tweetphoto.com/28103398"
-    assert_equal TwitPhoto::TwitPhoto.getPhotoUrlFromUrl("http://lockerz.com/s/110826629"), "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=medium&url=http://lockerz.com/s/110826629"
-    assert_equal TwitPhoto::TwitPhoto.getPhotoUrlFromUrl("http://plixi.com/p/89511189"), "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=medium&url=http://plixi.com/p/89511189"
+    assert_equal TwitPhoto::TwitPhoto.getPhotoUrlFromUrl("http://tweetphoto.com/28103398"), "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=large&url=http://tweetphoto.com/28103398"
+    assert_equal TwitPhoto::TwitPhoto.getPhotoUrlFromUrl("http://lockerz.com/s/110826629"), "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=large&url=http://lockerz.com/s/110826629"
+    assert_equal TwitPhoto::TwitPhoto.getPhotoUrlFromUrl("http://plixi.com/p/89511189"), "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=large&url=http://plixi.com/p/89511189"
     assert_equal TwitPhoto::TwitPhoto.getPhotoUrlFromUrl("http://yfrog.com/gzozrllj"), "http://yfrog.com/gzozrllj:medium"
-    assert_equal TwitPhoto::TwitPhoto.getPhotoUrlFromUrl("http://instagr.am/p/Fv3t0"), "http://instagr.am/p/Fv3t0/media/?size=m"
+    assert_equal TwitPhoto::TwitPhoto.getPhotoUrlFromUrl("http://instagr.am/p/Fv3t0"), "http://instagr.am/p/Fv3t0/media/?size=l"
     assert_equal TwitPhoto::TwitPhoto.getPhotoUrlFromUrl("http://twitpic.com/5bpgp0"), "http://twitpic.com/show/large/5bpgp0"
     assert TwitPhoto::TwitPhoto.getPhotoUrlFromUrl("http://google.ca").nil?
   end
@@ -52,22 +52,22 @@ class TestTwitphoto < Test::Unit::TestCase
   end
 
   should "test TweetPhot/Lockerz/Plixi" do
-    assert_equal TwitPhoto::Adaptors::LockerzAdaptor.getImageUrl("http://tweetphoto.com/28103398"), "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=medium&url=http://tweetphoto.com/28103398"
-    assert_equal TwitPhoto::Adaptors::LockerzAdaptor.getImageUrl("http://lockerz.com/s/110826629"), "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=medium&url=http://lockerz.com/s/110826629"
-    assert_equal TwitPhoto::Adaptors::LockerzAdaptor.getImageUrl("http://plixi.com/p/89511189"), "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=medium&url=http://plixi.com/p/89511189" 
+    assert_equal TwitPhoto::Adaptors::LockerzAdaptor.getImageUrl("http://tweetphoto.com/28103398"), "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=large&url=http://tweetphoto.com/28103398"
+    assert_equal TwitPhoto::Adaptors::LockerzAdaptor.getImageUrl("http://lockerz.com/s/110826629"), "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=large&url=http://lockerz.com/s/110826629"
+    assert_equal TwitPhoto::Adaptors::LockerzAdaptor.getImageUrl("http://plixi.com/p/89511189"), "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=large&url=http://plixi.com/p/89511189"
     assert TwitPhoto::Adaptors::YFrogAdaptor.getImageUrl("http://notyfrog.com/gzozrllj").nil?
   end
-  
+
   should "test Yfrog" do
-    assert_equal TwitPhoto::Adaptors::YFrogAdaptor.getImageUrl("http://yfrog.com/gzozrllj"), "http://yfrog.com/gzozrllj:medium" 
+    assert_equal TwitPhoto::Adaptors::YFrogAdaptor.getImageUrl("http://yfrog.com/gzozrllj"), "http://yfrog.com/gzozrllj:medium"
     assert TwitPhoto::Adaptors::YFrogAdaptor.getImageUrl("http://notyfrog.com/gzozrllj").nil?
     assert_equal TwitPhoto::Adaptors::YFrogAdaptor.getImageUrl("http://yfrog.com/gz23uqdj"), "http://yfrog.com/gz23uqdj:medium"
   end
 
   should "test Instagram" do
-    assert_equal TwitPhoto::Adaptors::InstagramAdaptor.getImageUrl("http://instagr.am/p/Fv3t0"), "http://instagr.am/p/Fv3t0/media/?size=m"
+    assert_equal TwitPhoto::Adaptors::InstagramAdaptor.getImageUrl("http://instagr.am/p/Fv3t0"), "http://instagr.am/p/Fv3t0/media/?size=l"
     assert TwitPhoto::Adaptors::InstagramAdaptor.getImageUrl("http://instagr.aam/p/Fv3t0").nil?
-    assert_equal TwitPhoto::Adaptors::InstagramAdaptor.getImageUrl("http://instagr.am/p/Fv3t0/"), "http://instagr.am/p/Fv3t0/media/?size=m"
+    assert_equal TwitPhoto::Adaptors::InstagramAdaptor.getImageUrl("http://instagr.am/p/Fv3t0/"), "http://instagr.am/p/Fv3t0/media/?size=l"
   end
 
   should "test TwitPic" do
