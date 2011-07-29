@@ -8,7 +8,7 @@ class Adaptors
     end
 
     def self.getImageUrl url
-      domain = self.domains.select { |d| url.start_with?(d) }
+      domain = self.domains.select { |d| url.to_s.start_with?(d) }
       return nil if domain.empty?
 
       # ensure last char is '/'
@@ -28,7 +28,7 @@ class Adaptors
     end
 
     def self.getImageUrl url
-      domain = self.domains.select { |d| url.start_with?(d) }
+      domain = self.domains.select { |d| url.to_s.start_with?(d) }
       return nil if domain.empty?
 
       return "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=large&url=" + url
@@ -41,7 +41,7 @@ class Adaptors
     end
 
     def self.getImageUrl url
-      domain = self.domains.select { |d| url.start_with?(d) }
+      domain = self.domains.select { |d| url.to_s.start_with?(d) }
       return nil if domain.empty?
 
       uri = URI.parse(url)
@@ -58,7 +58,7 @@ class Adaptors
     end
 
     def self.getImageUrl url
-        domain = self.domains.select { |d| url.start_with?(d) }
+        domain = self.domains.select { |d| url.to_s.start_with?(d) }
         return nil if domain.empty?
 
         uri = URI.parse(url)
