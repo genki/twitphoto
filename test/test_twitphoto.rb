@@ -39,6 +39,8 @@ class TestTwitphoto < Test::Unit::TestCase
     assert_equal TwitPhoto::TwitPhoto.getPhotoUrlFromUrl("http://yfrog.com/gzozrllj"), "http://yfrog.com/gzozrllj:medium"
     assert_equal TwitPhoto::TwitPhoto.getPhotoUrlFromUrl("http://instagr.am/p/Fv3t0"), "http://instagr.am/p/Fv3t0/media/?size=l"
     assert_equal TwitPhoto::TwitPhoto.getPhotoUrlFromUrl("http://twitpic.com/5bpgp0"), "http://twitpic.com/show/large/5bpgp0"
+    assert_equal TwitPhoto::TwitPhoto.getPhotoUrlFromUrl("http://twitgoo.com/2l2uq0"), "http://twitgoo.com/2l2uq0/img"
+    assert_equal TwitPhoto::TwitPhoto.getPhotoUrlFromUrl("http://img.ly/6IWZ"), "http://img.ly/show/full/6IWZ/"
     assert TwitPhoto::TwitPhoto.getPhotoUrlFromUrl("http://google.ca").nil?
   end
 
@@ -48,6 +50,7 @@ class TestTwitphoto < Test::Unit::TestCase
     assert_equal TwitPhoto::TwitPhoto.getPhotoUrlsFromText("http:www.google.com http://tweetphoto.com/28103398 http://instagr.am/p/Fv3t0").length, 2
     assert_equal TwitPhoto::TwitPhoto.getPhotoUrlsFromText("http://lockerz.com/s/110826629").length, 1
     assert_equal TwitPhoto::TwitPhoto.getPhotoUrlsFromText("Content http://twitpic.com/5bpgp0 content").length, 1
+    assert_equal TwitPhoto::TwitPhoto.getPhotoUrlsFromText("TwitGoo AND Imgly http://twitgoo.com/2l2uq0 yay http://img.ly/6IWZ").length, 2
     assert_equal TwitPhoto::TwitPhoto.getPhotoUrlsFromText("Content http://yfrog.com/gzozrllj http://plixi.com/p/89511189 content").length, 2
   end
 
@@ -75,5 +78,18 @@ class TestTwitphoto < Test::Unit::TestCase
     assert TwitPhoto::Adaptors::TwitPicAdaptor.getImageUrl("http://nottwitpic.com/5bpgp0").nil?
     assert_equal TwitPhoto::Adaptors::TwitPicAdaptor.getImageUrl("http://twitpic.com/5b3rhe"), "http://twitpic.com/show/large/5b3rhe"
   end
+
+  should "test TwitGoo" do
+    assert_equal TwitPhoto::Adaptors::TwitGooAdaptor.getImageUrl("http://twitgoo.com/2l2uq0"), "http://twitgoo.com/2l2uq0/img"
+    assert TwitPhoto::Adaptors::TwitGooAdaptor.getImageUrl("http://nottwitgoo.com/2l2uq0").nil?
+    assert_equal TwitPhoto::Adaptors::TwitGooAdaptor.getImageUrl("http://twitgoo.com/2l2uq0/"), "http://twitgoo.com/2l2uq0/img"
+  end
+
+  should "test Imgly" do
+    assert_equal TwitPhoto::Adaptors::ImglyAdaptor.getImageUrl("http://img.ly/6IWZ"), "http://img.ly/show/full/6IWZ/"
+    assert TwitPhoto::Adaptors::ImglyAdaptor.getImageUrl("http://imgxlily.com/2l2uq0").nil?
+    assert_equal TwitPhoto::Adaptors::ImglyAdaptor.getImageUrl("http://img.ly/6IWZ/"), "http://img.ly/show/full/6IWZ/"
+  end
+
 
 end

@@ -68,5 +68,41 @@ class Adaptors
     end
   end
 
+  class TwitGooAdaptor
+    def self.domains
+      %w(http://twitgoo.com)
+    end
+
+    def self.getImageUrl url
+      domain = self.domains.select { |d| url.to_s.start_with?(d) }
+      return nil if domain.empty?
+
+      # ensure last char is '/'
+      if url[url.length - 1] != "/"[0]
+        url = url + "/"
+      end
+
+      return url + "img"
+    end
+  end
+
+  class ImglyAdaptor
+    # check for "http://yfrog." (no domain since yfrog supports many domains)
+    def self.domains
+      %w(http://img.ly)
+    end
+
+    def self.getImageUrl url
+        domain = self.domains.select { |d| url.to_s.start_with?(d) }
+        return nil if domain.empty?
+
+        uri = URI.parse(url)
+        id = uri.path.split('/').last
+
+        # Must end with /
+        return "http://img.ly/show/full/" + id + "/"
+    end
+  end
+
 end
 end

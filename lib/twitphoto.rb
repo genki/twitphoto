@@ -145,7 +145,7 @@ class TwitPhoto
 protected
 
   def self.adaptors
-    [Adaptors::YFrogAdaptor, Adaptors::TwitPicAdaptor, Adaptors::LockerzAdaptor, Adaptors::InstagramAdaptor]
+    [Adaptors::YFrogAdaptor, Adaptors::TwitPicAdaptor, Adaptors::LockerzAdaptor, Adaptors::InstagramAdaptor, Adaptors::TwitGooAdaptor, Adaptors::ImglyAdaptor]
   end
 
 end
