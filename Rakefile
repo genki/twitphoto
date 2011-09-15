@@ -13,7 +13,7 @@ require 'rake'
 
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
-  gem.name = "twitphoto"
+  gem.name = "genki-twitphoto"
   gem.homepage = "http://github.com/scosman/twitphoto"
   gem.license = "MIT"
   gem.summary = "a gem to generate an image URL from shortened URLs from common photo sharing tools. Supports twitter/photobucket, twitpic, yfrog, instagram and twitphoto/plixi/lockerz"

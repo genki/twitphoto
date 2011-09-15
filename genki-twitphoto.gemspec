@@ -4,12 +4,12 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{twitphoto}
-  s.version = "0.9.2"
+  s.name = %q{genki-twitphoto}
+  s.version = "0.10.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Steve Cosman"]
-  s.date = %q{2011-07-22}
+  s.authors = [%q{Steve Cosman}]
+  s.date = %q{2011-09-15}
   s.description = %q{a gem to generate an image URL from shortened URLs from common photo sharing tools. Supports twitter/photobucket, twitpic, yfrog, instagram and tweetphoto/plixi/lockerz. It also includes support for the twitter gem, which helps with expanding t.co and bit.ly shortened URLs. Flickr is not supported as it would require a service call.}
   s.email = %q{delrox@live.com}
   s.extra_rdoc_files = [
@@ -31,9 +31,9 @@ Gem::Specification.new do |s|
     "twitphoto.gemspec"
   ]
   s.homepage = %q{http://github.com/scosman/twitphoto}
-  s.licenses = ["MIT"]
-  s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.6.2}
+  s.licenses = [%q{MIT}]
+  s.require_paths = [%q{lib}]
+  s.rubygems_version = %q{1.8.6}
   s.summary = %q{a gem to generate an image URL from shortened URLs from common photo sharing tools. Supports twitter/photobucket, twitpic, yfrog, instagram and twitphoto/plixi/lockerz}
 
   if s.respond_to? :specification_version then
